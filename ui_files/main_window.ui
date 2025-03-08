@@ -7,62 +7,93 @@
     <x>0</x>
     <y>0</y>
     <width>858</width>
-    <height>594</height>
+    <height>589</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
      <number>0</number>
     </property>
     <property name="topMargin">
      <number>0</number>
     </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
-     <widget class="QTreeWidget" name="treeWidget">
-      <property name="minimumSize">
-       <size>
-        <width>200</width>
-        <height>521</height>
-       </size>
+     <widget class="QWidget" name="widget_2" native="true">
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>200</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="headerHidden">
-       <bool>true</bool>
-      </property>
-      <property name="columnCount">
-       <number>1</number>
-      </property>
-      <column>
-       <property name="text">
-        <string notr="true">1</string>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
        </property>
-      </column>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTreeWidget" name="treeWidget">
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>521</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:none;
+border-right: 1px solid black;
+background-color: rgb(255, 184, 195);
+</string>
+         </property>
+         <property name="headerHidden">
+          <bool>true</bool>
+         </property>
+         <property name="columnCount">
+          <number>1</number>
+         </property>
+         <column>
+          <property name="text">
+           <string notr="true">1</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget" native="true">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 218, 206);</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
-    </item>
-    <item>
-     <widget class="QWidget" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>50</height>
+    </size>
+   </property>
    <property name="font">
     <font>
      <weight>50</weight>
@@ -105,7 +136,7 @@
   </widget>
   <action name="actionNew">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/new.png</normaloff>:/icons/resources/new.png</iconset>
    </property>
    <property name="text">
@@ -131,7 +162,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/cut.png</normaloff>:/icons/resources/cut.png</iconset>
    </property>
    <property name="text">
@@ -146,7 +177,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/copy.png</normaloff>:/icons/resources/copy.png</iconset>
    </property>
    <property name="text">
@@ -161,7 +192,7 @@
   </action>
   <action name="actionRename">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/rename.png</normaloff>:/icons/resources/rename.png</iconset>
    </property>
    <property name="text">
@@ -173,7 +204,7 @@
   </action>
   <action name="actionDelete">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/icons8-delete-96.png</normaloff>:/icons/resources/icons8-delete-96.png</iconset>
    </property>
    <property name="text">
@@ -185,7 +216,7 @@
   </action>
   <action name="actionLock">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/icons8-secure-folder-96.png</normaloff>:/icons/resources/icons8-secure-folder-96.png</iconset>
    </property>
    <property name="text">
@@ -197,7 +228,7 @@
   </action>
   <action name="actionUnlock">
    <property name="icon">
-    <iconset resource="resource.qrc">
+    <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/icons8-key-96.png</normaloff>:/icons/resources/icons8-key-96.png</iconset>
    </property>
    <property name="text">
@@ -209,7 +240,7 @@
   </action>
  </widget>
  <resources>
-  <include location="resource.qrc"/>
+  <include location="../resource.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -11,8 +11,9 @@ import resource_1
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi("main_window.ui", self)  # Loading the UI file
+        uic.loadUi("ui_files\main_window.ui", self)  # Loading the UI file
         self.setWindowTitle("FortFile")
+        self.toolBar.setStyleSheet("QToolBar { spacing: 20px; height: 50px; border: none; border-bottom: 1px solid black; }")
 
         root_folder = "D:/python/Secure File Management System/Drive"
         self.populate_tree(root_folder)

@@ -19,4 +19,3 @@ folder_path = "D:/python/Secure File Management System/Drive"  # Change this to 
 nested_folders = get_folder_structure(folder_path)
 print(nested_folders)
 
-['test'['test2']]

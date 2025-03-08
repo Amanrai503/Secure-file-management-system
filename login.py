@@ -12,7 +12,7 @@ from main_window import MainWindow
 class LoginWindow(QMainWindow):
     def __init__(self):
         super(LoginWindow, self).__init__()
-        uic.loadUi("login_page.ui", self)  
+        uic.loadUi("ui_files\login_page.ui", self)  
         self.setWindowTitle("Sign in Page")
 
 

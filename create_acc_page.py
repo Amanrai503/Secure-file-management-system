@@ -15,9 +15,9 @@ class Verify(QWidget):
 class CreateWindow(QMainWindow):
     def __init__(self):
         super(CreateWindow, self).__init__()
-        uic.loadUi("create_acc.ui", self)  # Loading the UI file
+        uic.loadUi("ui_files\create_acc.ui", self)  # Loading the UI file
         self.setWindowTitle("Create Account")
-        self.layout = self.horizontalLayout_2
+        self.layout = self.horizontalLayout_2  # to add the verify widget we need to get the layout
         self.next_btn.clicked.connect(self.open_qr)
 
     def open_qr(self):
