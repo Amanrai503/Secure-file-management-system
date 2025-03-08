@@ -1,0 +1,15 @@
+<RCC>
+  <qresource prefix="images">
+    <file>resources/ss.jpg</file>
+  </qresource>
+  <qresource prefix="icons">
+    <file>resources/icons8-key-96.png</file>
+    <file>resources/icons8-secure-folder-96.png</file>
+    <file>resources/copy.png</file>
+    <file>resources/cut.png</file>
+    <file>resources/icons8-delete-96.png</file>
+    <file>resources/icons8-paste-96.png</file>
+    <file>resources/new.png</file>
+    <file>resources/rename.png</file>
+  </qresource>
+</RCC>

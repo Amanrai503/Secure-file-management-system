@@ -1,0 +1,26 @@
+"""def contextMenuEvent(self, event):
+        context_menu = QMenu(self)
+
+        # creating actions
+        option1_action = QAction(QIcon("icons8-refresh-48.png"),"Refresh", self)
+        option2_action = QAction(QIcon("icons8-new-file-48.png"),"New", self)
+        exit_action = QAction(QIcon("icons8-sort-by-48.png"),"Short by", self)
+
+        # Connect actions to their functions
+        option1_action.triggered.connect(self.on_option1)
+        option2_action.triggered.connect(self.on_option2)
+        exit_action.triggered.connect(self.close)
+
+        # Add actions to the context menu menu
+        context_menu.addAction(option1_action)
+        context_menu.addAction(option2_action)
+        context_menu.addAction(exit_action)
+
+        # Execute the menu at the cursor position
+        context_menu.exec_(event.globalPos())
+
+    def on_option1(self):
+        QMessageBox.information(self, "Option 1", "You selected Option 1!")
+
+    def on_option2(self):
+        QMessageBox.information(self, "Option 2", "You selected Option 2!")"""
