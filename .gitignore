@@ -1,4 +1,4 @@
 ECHO is on.
 *.env
 Drive/
-*secret.key
+__pycache__

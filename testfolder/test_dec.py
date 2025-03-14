@@ -1,21 +1,25 @@
-from cryptography.fernet import Fernet
+import mysql.connector
+def insert_user(name: str, email: str, password: str, key: str):
+        print(name, email, password, key)
+        try:
+            connection =mysql.connector.connect(
+                host="localhost",
+                user="root",  
+                password="1234",  
+                database="login_info"
+            )
+            cursor = connection.cursor()
+            query = "INSERT INTO users (Name, Email, password2, totp_secret) VALUES (%s, %s, %s, %s)"
+            cursor.execute(query, (name, email, password, key))
+            connection.commit()
+            print("User inserted successfully.")
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+        print("done//////////////////////")
 
-# Load the encryption key
-with open("secret.key", "rb") as key_file:
-    key = key_file.read()
-
-cipher = Fernet(key)
-def decrypt_file(filename):
-    """Decrypt a file if you have the secret key."""
-    with open(filename, "rb") as file:
-        encrypted_data = file.read()  # Read encrypted file
-
-    decrypted_data = cipher.decrypt(encrypted_data)  # Decrypt content
-
-    with open(filename[:-4], "wb") as file:  # Remove ".enc"
-        file.write(decrypted_data)
-
-    print(f"Decrypted: {filename} → {filename[:-4]}")
-
-# Example usage
-decrypt_file("dummy.txt.enc")
+insert_user("Aman", "example@gmail.com", "DJDKLSIJJDD", "1234567890")

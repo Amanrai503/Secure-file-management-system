@@ -11,7 +11,7 @@ import resource_1
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        uic.loadUi("ui_files\main_window.ui", self)  # Loading the UI file
+        uic.loadUi("ui_files\\main_window.ui", self)  # Loading the UI file
         self.setWindowTitle("FortFile")
         self.toolBar.setStyleSheet("QToolBar { spacing: 20px; height: 50px; border: none; border-bottom: 1px solid black; }")
 
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
     def populate_tree(self, root_folder):
         self.treeWidget.clear()  # Clear any existing items
         root_item = QTreeWidgetItem(self.treeWidget, [os.path.basename(root_folder)])
-        root_item.setIcon(0, QIcon("resources\icons8-folder-96.png"))
+        root_item.setIcon(0, QIcon("resources\\icons8-folder-96.png"))
         self.treeWidget.addTopLevelItem(root_item)
         self.add_folders(root_item, root_folder)  # Recursively add folders
 
@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
                 item_path = os.path.join(folder_path, item)
                 if os.path.isdir(item_path):  # Only process folders
                     folder_item = QTreeWidgetItem(parent_item, [item])
-                    folder_item.setIcon(0, QIcon("resources\icons8-folder-96.png"))
+                    folder_item.setIcon(0, QIcon("resources\\icons8-folder-96.png"))
                     self.add_folders(folder_item, item_path)  
         except PermissionError:
             pass  
