@@ -2,6 +2,7 @@ import sys
 import mysql.connector as sqlt
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
+from PyQt5.QtGui import QIcon
 from inset_user import insert_user_info
 from login_logic import get_key, verify
 import resource_1
@@ -14,6 +15,7 @@ class LoginWindow(QMainWindow):
     def __init__(self):
         super(LoginWindow, self).__init__()
         uic.loadUi("ui_files\\testing_incertion.ui", self)  
+        self.setWindowIcon(QIcon("resources\\logo.png"))
         self.setWindowTitle("Ctreate Account")
         self.widget_2.setVisible(False)
         self.next_btn.clicked.connect(self.show_ver)

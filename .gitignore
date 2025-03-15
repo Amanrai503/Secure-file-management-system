@@ -1,4 +1,4 @@
 ECHO is on.
 *.env
 Drive/
-__pycache__
+__pycache__/

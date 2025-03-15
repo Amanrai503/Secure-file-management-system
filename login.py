@@ -2,7 +2,9 @@ import sys
 import mysql.connector as sqlt
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
-from create_acc_page import CreateWindow
+from PyQt5.QtGui import QIcon
+from create_account import LoginWindow
+from login_logic import verify
 import resource_1
 from main_window import MainWindow
 
@@ -12,7 +14,8 @@ from main_window import MainWindow
 class LoginWindow(QMainWindow):
     def __init__(self):
         super(LoginWindow, self).__init__()
-        uic.loadUi("ui_files\login_page.ui", self)  
+        uic.loadUi("ui_files\\login_page.ui", self)  
+        self.setWindowIcon(QIcon("resources\\logo.png"))
         self.setWindowTitle("Sign in Page")
 
 
@@ -21,7 +24,7 @@ class LoginWindow(QMainWindow):
         self.forgot_pass_btn.clicked.connect(self.forgot_pass)
     
     def create_acc(self):
-        self.create_window = CreateWindow()
+        self.create_window = LoginWindow()
         self.create_window.show()
         self.close()
 
@@ -34,10 +37,10 @@ class LoginWindow(QMainWindow):
     def sign_in(self):
         email = self.email_input.text().strip()
         password = self.password_input.text().strip()
-        top_secret = self.acces_code.text().strip()
+        totp = self.acces_code.text().strip()
         flag = False
 
-        if not email or not password and not top_secret:
+        if not email or not password and not totp:
             QMessageBox.warning(self, "Error", "Email and Password cannot be empty!")
             return
 
@@ -57,8 +60,9 @@ class LoginWindow(QMainWindow):
 
             if result:
                 db_email, db_password, db_totp_secret = result  
+                access = verify(db_totp_secret, totp)
 
-                if password == db_password and top_secret == db_totp_secret:  
+                if password == db_password and access:  
                     flag =  True
                 else:
                     flag =  False

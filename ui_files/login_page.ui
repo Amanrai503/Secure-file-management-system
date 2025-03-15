@@ -47,7 +47,8 @@ background:transparent;
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">text-align: center;</string>
+          <string notr="true">text-align: center;
+</string>
          </property>
          <property name="text">
           <string>FortiFile</string>
@@ -298,6 +299,25 @@ QPushButton:hover:!checked{
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_7">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>25</y>
+           <width>51</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../resource.qrc">:/icons/resources/logo.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
          </property>
         </widget>
        </widget>

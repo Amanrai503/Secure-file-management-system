@@ -44,12 +44,6 @@
        </property>
        <item>
         <widget class="QTreeWidget" name="treeWidget">
-         <property name="minimumSize">
-          <size>
-           <width>200</width>
-           <height>521</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -59,15 +53,27 @@
          <property name="styleSheet">
           <string notr="true">border:none;
 border-right: 1px solid black;
-background-color: rgb(255, 184, 195);
+
 </string>
          </property>
-         <property name="headerHidden">
-          <bool>true</bool>
+         <property name="dragEnabled">
+          <bool>false</bool>
          </property>
-         <property name="columnCount">
-          <number>1</number>
+         <property name="dragDropOverwriteMode">
+          <bool>false</bool>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="horizontalScrollMode">
+          <enum>QAbstractItemView::ScrollPerItem</enum>
+         </property>
+         <attribute name="headerVisible">
+          <bool>false</bool>
+         </attribute>
          <column>
           <property name="text">
            <string notr="true">1</string>
@@ -76,10 +82,19 @@ background-color: rgb(255, 184, 195);
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="widget" native="true">
+        <widget class="QTreeView" name="treeView">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 218, 206);</string>
+          <string notr="true">QTreeWidget::item:selected {
+        background-color: #0078D7; /* Light blue background */
+        color: white; /* White text */
+    }</string>
          </property>
+         <property name="sortingEnabled">
+          <bool>true</bool>
+         </property>
+         <attribute name="headerVisible">
+          <bool>true</bool>
+         </attribute>
         </widget>
        </item>
       </layout>
@@ -91,7 +106,7 @@ background-color: rgb(255, 184, 195);
    <property name="minimumSize">
     <size>
      <width>0</width>
-     <height>50</height>
+     <height>0</height>
     </size>
    </property>
    <property name="font">
@@ -133,6 +148,17 @@ background-color: rgb(255, 184, 195);
    <addaction name="separator"/>
    <addaction name="actionLock"/>
    <addaction name="actionUnlock"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar_2">
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
   </widget>
   <action name="actionNew">
    <property name="icon">

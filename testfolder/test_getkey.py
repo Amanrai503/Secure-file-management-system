@@ -1,86 +1,30 @@
+from PyQt5.QtWidgets import QApplication, QTreeView
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QFileSystemModel
+import qdarkstyle
 import sys
-import mysql.connector
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox
 
-class UserForm(QWidget):
+class FileManager(QTreeView):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("User Registration")
-        self.setGeometry(200, 200, 300, 200)
+        # Create a file system model
+        self.model = QFileSystemModel()
+        self.model.setRootPath("")  # Start from the root directory
 
-        # Create layout
-        layout = QVBoxLayout()
+        # Set the model to the tree view
+        self.setModel(self.model)
 
-        # Name Input
-        self.name_label = QLabel("Name:")
-        self.name_input = QLineEdit()
-        layout.addWidget(self.name_label)
-        layout.addWidget(self.name_input)
+        # Set the root directory (Change to a specific directory if needed)
+        self.setRootIndex(self.model.index("D:\\python\\Secure File Management System\\Drive"))  # Change to desired root path
 
-        # Email Input
-        self.email_label = QLabel("Email:")
-        self.email_input = QLineEdit()
-        layout.addWidget(self.email_label)
-        layout.addWidget(self.email_input)
+        # Expand folders by default
+        self.expandAll()
 
-        # Password Input
-        self.password_label = QLabel("Password:")
-        self.password_input = QLineEdit()
-        self.password_input.setEchoMode(QLineEdit.Password)  # Hide password input
-        layout.addWidget(self.password_label)
-        layout.addWidget(self.password_input)
-
-        # Insert Button
-        self.insert_button = QPushButton("Insert")
-        self.insert_button.clicked.connect(self.insert_user)
-        layout.addWidget(self.insert_button)
-
-        self.setLayout(layout)
-
-    def insert_user(self):
-        name = self.name_input.text()
-        email = self.email_input.text()
-        password = self.password_input.text()
-
-        if not name or not email or not password:
-            QMessageBox.warning(self, "Input Error", "All fields are required!")
-            return
-
-        try:
-            # Connect to MySQL database
-            connection = mysql.connector.connect(
-                host="localhost",
-                user="root",  # Change this if you have a different MySQL username
-                password="1234",  # Change this to your MySQL password
-                database="test"
-            )
-            cursor = connection.cursor()
-
-            # Insert query
-            query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
-            cursor.execute(query, (name, email, password))
-            connection.commit()
-
-            QMessageBox.information(self, "Success", "User inserted successfully!")
-            
-            # Clear input fields
-            self.name_input.clear()
-            self.email_input.clear()
-            self.password_input.clear()
-
-        except mysql.connector.Error as err:
-            QMessageBox.critical(self, "Database Error", f"Error: {err}")
-        
-        finally:
-            if cursor:
-                cursor.close()
-            if connection:
-                connection.close()
-
-# Run the Application
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = UserForm()
+    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    window = FileManager()
+    window.setWindowTitle("File Manager")
     window.show()
     sys.exit(app.exec_())
