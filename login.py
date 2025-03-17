@@ -22,6 +22,8 @@ class LoginWindow(QMainWindow):
         self.create_acc_btn.clicked.connect(self.create_acc)
         self.sign_in_btn.clicked.connect(self.sign_in)
         self.forgot_pass_btn.clicked.connect(self.forgot_pass)
+
+        
     
     def create_acc(self):
         self.create_window = LoginWindow()

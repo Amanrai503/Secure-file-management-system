@@ -1,7 +1,7 @@
 import sys
 import os
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeWidget, QTreeWidgetItem, QTreeView, QFileSystemModel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeWidget, QTreeWidgetItem, QTreeView, QFileSystemModel, QWidget, QSizePolicy, QPushButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt, QDir
 import resource_1
@@ -12,7 +12,9 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi("ui_files\\main_window.ui", self)
-        self.setWindowIcon(QIcon("resources\logo.png"))
+        self.setWindowIcon(QIcon("resources\\logo.png"))
+
+        
         self.treeWidget.clear()
         self.start_directory = "D:/python/Secure File Management System/Drive"
         self.current_directory = self.start_directory

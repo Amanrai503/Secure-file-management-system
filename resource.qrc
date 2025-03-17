@@ -3,6 +3,7 @@
     <file>resources/ss.jpg</file>
   </qresource>
   <qresource prefix="icons">
+    <file>resources/icons8-details-96.png</file>
     <file>resources/logo.png</file>
     <file>resources/icons8-back-96.png</file>
     <file>resources/icons8-key-96.png</file>
