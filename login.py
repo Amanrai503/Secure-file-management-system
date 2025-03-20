@@ -3,7 +3,7 @@ import mysql.connector as sqlt
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMessageBox
 from PyQt5.QtGui import QIcon
-from create_account import LoginWindow
+from create_account import CreateWindow
 from login_logic import verify
 import resource_1
 from main_window import MainWindow
@@ -16,7 +16,7 @@ class LoginWindow(QMainWindow):
         super(LoginWindow, self).__init__()
         uic.loadUi("ui_files\\login_page.ui", self)  
         self.setWindowIcon(QIcon("resources\\logo.png"))
-        self.setWindowTitle("Sign in Page")
+        self.setWindowTitle("FortiFile")
 
 
         self.create_acc_btn.clicked.connect(self.create_acc)
@@ -26,9 +26,10 @@ class LoginWindow(QMainWindow):
         
     
     def create_acc(self):
-        self.create_window = LoginWindow()
-        self.create_window.show()
         self.close()
+        self.create_window = CreateWindow()
+        self.create_window.show()
+        
 
 
 

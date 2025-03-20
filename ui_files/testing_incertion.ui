@@ -416,15 +416,26 @@ border-radius:20</string>
       <widget class="QPushButton" name="pushButton">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>30</x>
          <y>20</y>
          <width>41</width>
-         <height>31</height>
+         <height>41</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">background:transparent;
-border:none;</string>
+        <string notr="true">QPushButton{
+
+
+border-radius:15px;
+}
+QPushButton {
+        background:transparent;
+        border:none;
+        border-radius: 20px;
+    }
+    QPushButton:hover {
+        background-color: rgb(206, 206, 206);
+    }</string>
        </property>
        <property name="text">
         <string/>

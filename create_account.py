@@ -11,12 +11,13 @@ from main_window import MainWindow
 
 
 
-class LoginWindow(QMainWindow):
+class CreateWindow(QMainWindow):
     def __init__(self):
-        super(LoginWindow, self).__init__()
+        super(CreateWindow, self).__init__()
         uic.loadUi("ui_files\\testing_incertion.ui", self)  
         self.setWindowIcon(QIcon("resources\\logo.png"))
-        self.setWindowTitle("Ctreate Account")
+        self.setWindowTitle("FortiFile")
+        self.resize(1000, 653)
         self.widget_2.setVisible(False)
         self.next_btn.clicked.connect(self.show_ver)
         self.verify_btn.clicked.connect(self.verify_and_save)
@@ -43,9 +44,9 @@ class LoginWindow(QMainWindow):
         print("done//////////////////////")
 def main():
     app = QApplication(sys.argv)  
-    window = LoginWindow()        
+    window = CreateWindow()        
     window.show()              
-    window.resize(1000, 653)     
+    #window.resize(1000, 653)     
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
