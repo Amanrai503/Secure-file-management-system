@@ -3,9 +3,9 @@ import qrcode
 from PyQt5.QtGui import QPixmap
 from io import BytesIO
 
-def get_key(name, password):
+def get_key(email):
     key = pyotp.random_base32()
-    url = pyotp.totp.TOTP(key).provisioning_uri(name=name, issuer_name=password)  # Generate QR URI
+    url = pyotp.totp.TOTP(key).provisioning_uri(name=email, issuer_name="FortiFile")  # Generate QR URI
 
     qr = qrcode.make(url)
 

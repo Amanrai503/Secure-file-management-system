@@ -1,13 +1,11 @@
-import mysql.connector
-from mysql.connector import Error
-import traceback
+import pymysql
 
-def insert_user_info(name: str, email: str, password: str, topt: str):
+def insert_user_info(name: str, email: str, password: str, topt: str, enc_key: str):
     connection = None
     cursor = None
     
     try:
-        connection = mysql.connector.connect(
+        connection = pymysql.connect(
             host="localhost",
             user="root",  
             password="1234",  
@@ -18,8 +16,8 @@ def insert_user_info(name: str, email: str, password: str, topt: str):
         cursor = connection.cursor()
         
         # Fixed query with proper escaping to prevent SQL injection
-        query = "INSERT INTO users (Name, Email, password2, totp_secret) VALUES (%s, %s, %s, %s)"
-        values = (name, email, password, topt)
+        query = "INSERT INTO users (Name, Email, password2, totp_secret, encryption_key) VALUES (%s, %s, %s, %s, %s)"
+        values = (name, email, password, topt, enc_key)
         
         
         cursor.execute(query, values)
@@ -28,11 +26,12 @@ def insert_user_info(name: str, email: str, password: str, topt: str):
         
     except Exception as e:
         print(f"General error: {e}")
-        print(traceback.format_exc())
     finally:
 
         if cursor:
 
             cursor.close()
-        if connection and connection.is_connected():
+        if connection and connection.open:
             connection.close()
+
+#insert_user_info("asfasdf", "asdfasdf", "sdfsdfasdfad", "sadfasdfsf", "sdkfaskdlfj")

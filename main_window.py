@@ -1,11 +1,13 @@
 import sys
 import os
-import shutil
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeWidget, QTreeWidgetItem, QTreeView, QFileSystemModel, QWidget, QSizePolicy, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeWidget, QTreeWidgetItem, QTreeView, QFileSystemModel, QWidget, QSizePolicy, QPushButton, QMessageBox, QInputDialog, QHeaderView
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QIcon, QClipboard
-from PyQt5.QtCore import Qt, QDir
+from PyQt5.QtCore import Qt, QDir, QSize,QFileInfo, QDateTime, QPropertyAnimation, QEasingCurve
 import resource_1
+
+from operations import cut_funtion, delete_funtion, rename_funtion, paste_funtion, copy_funtion, details_funtion, set_details, new_file_funtion
 
 import qdarkstyle
 
@@ -15,10 +17,14 @@ class MainWindow(QMainWindow):
         uic.loadUi("ui_files\\main_window.ui", self)
         self.setWindowIcon(QIcon("resources\\logo.png"))
         self.setWindowTitle("FortiFile")
+        self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+        self.fade_in_animation()
+        self.toolBar.setIconSize(QSize(36, 36))
+        self.details_widget.setVisible(False)
 
         
         self.treeWidget.clear()
-
+        self.treeWidget.setIconSize(QSize(28, 28))
 
         #variables holding the path of the file and current selectted file
         self.start_directory = "D:/python/Secure File Management System/Drive"
@@ -43,8 +49,17 @@ class MainWindow(QMainWindow):
         self.actionDelete.triggered.connect(self.delete_f)
         self.actionDetails.triggered.connect(self.details_f)
 
-        self.actionLock.triggered.connect(self.lock_f)
-        self.actionUnlock.triggered.connect(self.unlock_f)
+        self.actionLockAll.triggered.connect(self.lock_f)
+        self.actionUnlockFile.triggered.connect(self.unlock_f)
+        self.details_on = False
+
+    def fade_in_animation(self):
+        """Applies a fade-in effect to the window."""
+        self.animation = QPropertyAnimation(self, b"windowOpacity")
+        self.animation.setDuration(500)  # Duration in milliseconds (1 sec)
+        self.animation.setStartValue(0)  # Fully transparent
+        self.animation.setEndValue(1)  # Fully visible
+        self.animation.start()
 
 
 
@@ -58,6 +73,8 @@ class MainWindow(QMainWindow):
     def display_file_path(self, index):
         self.activate_buttons()
         self.current_selected_file_path = self.model.filePath(index)  # Get file path from index
+        if self.details_on:
+            set_details(self)
 
 
     def activate_buttons(self):
@@ -66,11 +83,27 @@ class MainWindow(QMainWindow):
         self.actionRename.setEnabled(True)
         self.actionDelete.setEnabled(True)
         self.actionDetails.setEnabled(True)
-        self.actionLock.setEnabled(True)
-        self.actionUnlock.setEnabled(True)
+        self.actionLockAll.setEnabled(True)
+        self.actionUnlockFile.setEnabled(True)
 
+    def deactivate_buttons(self):
+        self.actionCut.setEnabled(False)
+        self.actionCopy.setEnabled(False)
+        self.actionRename.setEnabled(False)
+        #self.actionDelete.setEnabled(False)
+        self.actionDetails.setEnabled(False)
+        self.actionLockAll.setEnabled(False)
+        self.actionUnlockFile.setEnabled(False)
 
     def populate_tree(self, root_folder):
+        root_folder_path_list = [r"D:\python\Secure File Management System\Documents",r"D:\python\Secure File Management System\Downloads",r"D:\python\Secure File Management System\Music",r"D:\python\Secure File Management System\Pictures"]
+        root_folder_icon_list = [r"D:\python\Secure File Management System\resources\doc.png",r"D:\python\Secure File Management System\resources\download.png",r"D:\python\Secure File Management System\resources\music.png",r"D:\python\Secure File Management System\resources\picture.png"]
+        for folder,icon in zip(root_folder_path_list,root_folder_icon_list):
+            item = QTreeWidgetItem([os.path.basename(folder)])
+            item_icon =QIcon(icon)
+            item.setIcon(0, item_icon)
+            item.setData(0, Qt.UserRole, folder)
+            self.treeWidget.addTopLevelItem(item)
         folder_icon = QIcon("resources/icons8-folder-96.png")
         root_item = QTreeWidgetItem(self.treeWidget, [os.path.basename(root_folder)])
         root_item.setIcon(0, folder_icon)
@@ -92,64 +125,47 @@ class MainWindow(QMainWindow):
         except PermissionError:
             pass  
 
-
-
     def get_folder_path(self, item):
         """Print the full folder path when clicked"""
         folder_path = item.data(0, Qt.UserRole)  # Retrieve stored path
         self.current_directory = folder_path
         #print("current folder  = ", self.current_directory)
         self.get_file()
-
-
-
-
-
+        self.current_selected_file_path = None
+        self.deactivate_buttons()
+    
+    def refresh_tree(self):
+        self.treeWidget.clear()     
+        self.populate_tree(self.start_directory)
 
     def new_file(self):
         print("New file")
+        new_file_funtion(self)
         pass
 
     def cut_f(self):
         print("Cut")
-        pass
+        cut_funtion(self)
 
     def copy_f(self):
         print("Copy")
-        if not hasattr(self, 'current_selected_file_path') or not self.current_selected_file_path:
-            QMessageBox.warning(self, "No File Selected", "Please select a file to copy.")
-            return
-        self.copied_file_path = self.current_selected_file_path  # Store file path for later use
-        self.actionPaste.setEnabled(True)
-        QMessageBox.information(self, "Copied", "File copied to clipboard (not yet pasted).")
-        pass
-
+        copy_funtion(self)
+        
     def paste_f(self):
         print("Paste")
-        if not hasattr(self, 'copied_file_path') or not self.copied_file_path:
-            QMessageBox.warning(self, "No File Copied", "Please copy a file before pasting.")
-            return
-        destination_folder = self.current_directory
-        if destination_folder:  # If user selected a folder
-            file_name = os.path.basename(self.copied_file_path)  # Extract filename
-            destination_path = os.path.join(destination_folder, file_name)  # Create full path
-            try:
-                shutil.copy(self.copied_file_path, destination_path)  # Perform copy
-                QMessageBox.information(self, "Success", f"File pasted to: {destination_path}")
-            except Exception as e:
-                QMessageBox.critical(self, "Error", f"Failed to paste file:\n{str(e)}")
+        paste_funtion(self)
 
     def rename_f(self):
         print("Rename")
-        pass
+        rename_funtion(self)
 
     def delete_f(self):
         print("Delete")
-        pass
+        delete_funtion(self)
 
     def details_f(self):
-        print("Details")
-        pass
+        details_funtion(self)
+        set_details(self)
 
     def lock_f(self):
         print("Lock")
@@ -158,14 +174,11 @@ class MainWindow(QMainWindow):
     def unlock_f(self):
         print("Unlock")
         pass
-
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     # Apply dark theme
-    app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    #app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
 
     window = MainWindow()
     window.show()
