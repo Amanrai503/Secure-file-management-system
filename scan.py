@@ -51,6 +51,5 @@ def get_scan_results(analysis_id):
         print("✅ The file appears to be clean.")
 
     return result
-
-file_path = r"resources\icons8-delete-96.png"
-scan_file_virustotal(file_path)
+#file_path = r"resources\icons8-delete-96.png"
+#scan_file_virustotal(file_path)

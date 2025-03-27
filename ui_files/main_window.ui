@@ -466,6 +466,7 @@ border:none;
    <addaction name="actionUnlockFile"/>
    <addaction name="actionUnlockAll"/>
    <addaction name="separator"/>
+   <addaction name="actionScan_file"/>
    <addaction name="actionDetails"/>
   </widget>
   <action name="actionNew">
@@ -663,6 +664,21 @@ border:none;
    </property>
    <property name="toolTip">
     <string>Unlock All Files</string>
+   </property>
+  </action>
+  <action name="actionScan_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icons/resources/icons8-rescan-document-96.png</normaloff>:/icons/resources/icons8-rescan-document-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scan file</string>
+   </property>
+   <property name="toolTip">
+    <string>Scan file</string>
    </property>
   </action>
  </widget>

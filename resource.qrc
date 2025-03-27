@@ -3,6 +3,7 @@
     <file>resources/ss.jpg</file>
   </qresource>
   <qresource prefix="icons">
+    <file>resources/icons8-rescan-document-96.png</file>
     <file>resources/icons8-encrypted-file-96.png</file>
     <file>resources/icons8-unlock-folder-96.png</file>
     <file>resources/icons8-details-96.png</file>

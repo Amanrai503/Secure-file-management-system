@@ -7,6 +7,7 @@ from PyQt5.QtGui import QIcon, QClipboard
 from PyQt5.QtCore import Qt, QDir, QSize,QFileInfo, QDateTime, QPropertyAnimation, QEasingCurve
 import resource_1
 
+from testing_animation import GifPlayer
 from operations import cut_funtion, delete_funtion, rename_funtion, paste_funtion, copy_funtion, details_funtion, set_details, new_file_funtion
 
 import qdarkstyle
@@ -48,6 +49,7 @@ class MainWindow(QMainWindow):
         self.actionRename.triggered.connect(self.rename_f)
         self.actionDelete.triggered.connect(self.delete_f)
         self.actionDetails.triggered.connect(self.details_f)
+        self.actionScan_file.triggered.connect(self.scan_file)
 
         self.actionLockAll.triggered.connect(self.lock_f)
         self.actionUnlockFile.triggered.connect(self.unlock_f)
@@ -56,7 +58,7 @@ class MainWindow(QMainWindow):
     def fade_in_animation(self):
         """Applies a fade-in effect to the window."""
         self.animation = QPropertyAnimation(self, b"windowOpacity")
-        self.animation.setDuration(500)  # Duration in milliseconds (1 sec)
+        self.animation.setDuration(300)  # Duration in milliseconds (1 sec)
         self.animation.setStartValue(0)  # Fully transparent
         self.animation.setEndValue(1)  # Fully visible
         self.animation.start()
@@ -85,12 +87,13 @@ class MainWindow(QMainWindow):
         self.actionDetails.setEnabled(True)
         self.actionLockAll.setEnabled(True)
         self.actionUnlockFile.setEnabled(True)
+        self.actionScan_file.setEnabled(True)
 
     def deactivate_buttons(self):
         self.actionCut.setEnabled(False)
         self.actionCopy.setEnabled(False)
         self.actionRename.setEnabled(False)
-        #self.actionDelete.setEnabled(False)
+        self.actionScan_file.setEnabled(False)
         self.actionDetails.setEnabled(False)
         self.actionLockAll.setEnabled(False)
         self.actionUnlockFile.setEnabled(False)
@@ -174,6 +177,11 @@ class MainWindow(QMainWindow):
     def unlock_f(self):
         print("Unlock")
         pass
+
+    def scan_file(self):
+        self.scan_window = GifPlayer(self)
+        self.scan_window.show()
+        self.setDisabled(True)
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
