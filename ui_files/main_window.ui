@@ -139,6 +139,9 @@ QTreeWidget::item {
          <property name="dragDropMode">
           <enum>QAbstractItemView::DragDrop</enum>
          </property>
+         <property name="defaultDropAction">
+          <enum>Qt::MoveAction</enum>
+         </property>
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>
@@ -453,6 +456,7 @@ border:none;
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionAdd_File"/>
    <addaction name="actionNew"/>
    <addaction name="actionNew_Folder"/>
    <addaction name="actionCopy"/>
@@ -640,6 +644,9 @@ border:none;
    </property>
   </action>
   <action name="actionLock_File">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../resource.qrc">
      <normaloff>:/icons/resources/icons8-encrypted-file-96.png</normaloff>:/icons/resources/icons8-encrypted-file-96.png</iconset>
@@ -679,6 +686,18 @@ border:none;
    </property>
    <property name="toolTip">
     <string>Scan file</string>
+   </property>
+  </action>
+  <action name="actionAdd_File">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icons/resources/icons8-add-96.png</normaloff>:/icons/resources/icons8-add-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add File</string>
+   </property>
+   <property name="toolTip">
+    <string>Add File</string>
    </property>
   </action>
  </widget>

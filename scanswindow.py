@@ -1,7 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QMovie
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5.QtGui import QMovie, QIcon
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 from scan import scan_file_virustotal
 
 class ScanThread(QThread):
@@ -44,7 +44,6 @@ class GifPlayer(QWidget):
         else:
             print("Scan failed.")
 
-    
         self.pushButton_2.setText("Close")
         self.pushButton_2.setStyleSheet(
             """
@@ -60,18 +59,18 @@ class GifPlayer(QWidget):
                 background-color: #27AE60;
             }
         """
-            )
+        )
+        self.pushButton_2.setIcon(QIcon("resources\icons8-tick-52.png"))
+        self.label.setText("The file appears to be clean")
         self.movie.stop()
-        self.movie = QMovie("resources/safe-ezgif.com-resize.gif",loopCount=1)
-        self.lab.setMovie(self.movie)
-        self.movie.setCacheMode(QMovie.CacheAll)  # Cache the frames for smooth play
-        self.movie.setSpeed(100)  # Set speed to normal (100%)
-        self.movie.finished.connect(self.movie.stop)
-        self.movie.start()
-        self.movie.finished.connect(self.close)
         
-        #self.close()  # Close GIF window
-        #self.mainwindow.setDisabled(False)  # Re-enable main window
+        # Create new movie with desired properties
+        self.movie = QMovie("resources/safe-ezgif.com-resize.gif")
+        self.lab.setMovie(self.movie)
+        self.movie.start()
+        QTimer.singleShot(3500, self.movie.stop)
+
+        
 
     def abort_scan(self):
         """User aborts scanning"""

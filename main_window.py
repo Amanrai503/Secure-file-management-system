@@ -1,14 +1,16 @@
 import sys
 import os
+import global_var
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTreeWidget, QTreeWidgetItem, QTreeView, QFileSystemModel, QWidget, QSizePolicy, QPushButton, QMessageBox, QInputDialog, QHeaderView
+from PyQt5.QtWidgets import QApplication, QMainWindow,  QTreeWidgetItem, QFileSystemModel, QMessageBox, QMenu, QAction
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QIcon, QClipboard
 from PyQt5.QtCore import Qt, QDir, QSize,QFileInfo, QDateTime, QPropertyAnimation, QEasingCurve
 import resource_1
 
-from testing_animation import GifPlayer
-from operations import cut_funtion, delete_funtion, rename_funtion, paste_funtion, copy_funtion, details_funtion, set_details, new_file_funtion
+from scanswindow import GifPlayer
+from encrypt import encrypt_file, decrypt_file, encrypt_folder, decrypt_folder
+from operations import cut_funtion, delete_funtion, rename_funtion, paste_funtion, copy_funtion, details_funtion, set_details, new_file_funtion, open_file_browser
 
 import qdarkstyle
 
@@ -42,6 +44,12 @@ class MainWindow(QMainWindow):
         self.treeWidget.itemClicked.connect(self.get_folder_path)
         self.get_file()
 
+        self.treeView.doubleClicked.connect(self.open_file)
+
+
+        self.treeView.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.treeView.customContextMenuRequested.connect(self.show_tree_context_menu)
+
         self.actionNew.triggered.connect(self.new_file)
         self.actionCut.triggered.connect(self.cut_f)
         self.actionCopy.triggered.connect(self.copy_f)
@@ -50,10 +58,13 @@ class MainWindow(QMainWindow):
         self.actionDelete.triggered.connect(self.delete_f)
         self.actionDetails.triggered.connect(self.details_f)
         self.actionScan_file.triggered.connect(self.scan_file)
-
-        self.actionLockAll.triggered.connect(self.lock_f)
+        self.actionLockAll.triggered.connect(self.lock_all)
+        self.actionUnlockAll.triggered.connect(self.unlock_all)
+        self.actionLock_File.triggered.connect(self.lock_f)
         self.actionUnlockFile.triggered.connect(self.unlock_f)
+        self.actionAdd_File.triggered.connect(self.add_new_file)
         self.details_on = False
+        self.scan_window = None
 
     def fade_in_animation(self):
         """Applies a fade-in effect to the window."""
@@ -78,6 +89,20 @@ class MainWindow(QMainWindow):
         if self.details_on:
             set_details(self)
 
+    def open_file(self):
+        file_path = self.current_selected_file_path  # Get full file path
+        if os.path.isfile(file_path):  # Ensure it's a file, not a folder
+            os.startfile(file_path)
+
+    def show_tree_context_menu(self, position):
+        menu = QMenu(self)
+        encrypt_action = QAction(QIcon("resources\\new.png"), "New File", self)
+
+        encrypt_action.triggered.connect(self.new_file)
+        menu.addAction(encrypt_action)
+
+        menu.exec_(self.treeView.viewport().mapToGlobal(position))
+
 
     def activate_buttons(self):
         self.actionCut.setEnabled(True)
@@ -86,8 +111,11 @@ class MainWindow(QMainWindow):
         self.actionDelete.setEnabled(True)
         self.actionDetails.setEnabled(True)
         self.actionLockAll.setEnabled(True)
+        self.actionLock_File.setEnabled(True)
+        self.actionUnlockAll.setEnabled(True)
         self.actionUnlockFile.setEnabled(True)
         self.actionScan_file.setEnabled(True)
+        #self.actionUnlockAll.setEnabled(True)
 
     def deactivate_buttons(self):
         self.actionCut.setEnabled(False)
@@ -95,7 +123,8 @@ class MainWindow(QMainWindow):
         self.actionRename.setEnabled(False)
         self.actionScan_file.setEnabled(False)
         self.actionDetails.setEnabled(False)
-        self.actionLockAll.setEnabled(False)
+        self.actionLock_File.setEnabled(False)
+        #self.actionLockAll.setEnabled(False)
         self.actionUnlockFile.setEnabled(False)
 
     def populate_tree(self, root_folder):
@@ -146,6 +175,9 @@ class MainWindow(QMainWindow):
         new_file_funtion(self)
         pass
 
+    def add_new_file(self):
+        open_file_browser(self)
+
     def cut_f(self):
         print("Cut")
         cut_funtion(self)
@@ -171,17 +203,41 @@ class MainWindow(QMainWindow):
         set_details(self)
 
     def lock_f(self):
-        print("Lock")
-        pass
+        print(global_var.current_User_ID)
+        print(global_var.current_key)
+        encrypt_file(self.current_selected_file_path, global_var.current_key)
 
     def unlock_f(self):
+        if not self.current_selected_file_path:
+            QMessageBox.warning(self, "Error", "Please select a file to Lock.")
+            return
+        decrypt_file(self.current_selected_file_path, global_var.current_key)
         print("Unlock")
         pass
+
+    def unlock_all(self):
+        decrypt_folder(self.current_directory, global_var.current_key,self)
+    
+    def lock_all(self):
+        encrypt_folder(self.current_directory, global_var.current_key,self)
 
     def scan_file(self):
         self.scan_window = GifPlayer(self)
         self.scan_window.show()
         self.setDisabled(True)
+
+    def closeEvent(self, event):
+        if self.scan_window and self.scan_window.isVisible():  # If scanning is active
+            reply = QMessageBox.question(self, "Warning", 
+                                        "A scan is in progress. Are you sure you want to exit?",
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if reply == QMessageBox.Yes:
+                event.accept()
+            else:
+                event.ignore()
+        else:
+            event.accept()
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 

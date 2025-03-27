@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QFileIconProvider
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QFileIconProvider, QFileDialog
 from PyQt5.QtCore import QFileInfo
 from PyQt5.QtGui import QPixmap
 import os 
@@ -200,3 +200,28 @@ def new_file_funtion(self):
         file.write("")
 
     QMessageBox.information(self, "Success", f"File created: {file_path}")
+
+def open_file_browser(self):
+        file_path, _ = QFileDialog.getOpenFileName(self, "Select a File", "", 
+                                                   "All Files (*);;Text Files (*.txt);;Images (*.png *.jpg)")
+        destination_folder = self.current_directory
+        if destination_folder:
+            file_name = os.path.basename(file_path)  
+            destination_path = os.path.join(destination_folder, file_name)
+
+            # Check if file already exists
+            if os.path.exists(destination_path):
+                reply = QMessageBox.question(
+                    self, "File Exists",
+                    f"The file '{file_name}' already exists. Do you want to replace it?",
+                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+                )
+                if reply == QMessageBox.No:
+                    return  # Cancel the operation
+
+            try:
+                shutil.copy(file_path, destination_path)  
+                QMessageBox.information(self, "Success", f"File added to: {destination_path}")
+
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Failed to paste file:\n{str(e)}")

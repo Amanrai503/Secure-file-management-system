@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>223</width>
-    <height>307</height>
+    <width>321</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="QLabel" name="lab">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>50</x>
+     <y>10</y>
      <width>224</width>
      <height>250</height>
     </rect>
@@ -41,9 +41,9 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>260</y>
-     <width>80</width>
+     <x>110</x>
+     <y>270</y>
+     <width>101</width>
      <height>35</height>
     </rect>
    </property>
@@ -73,9 +73,39 @@ QPushButton:hover {
    <property name="text">
     <string>Abort</string>
    </property>
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icons/resources/icons8-close-52.png</normaloff>:/icons/resources/icons8-close-52.png</iconset>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>330</y>
+     <width>211</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel {
+	background:transparent;
+    font-family: 'Arial';
+    color: #333; /* Dark Gray */
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_2</sender>
