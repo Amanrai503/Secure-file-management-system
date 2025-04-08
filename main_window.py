@@ -2,17 +2,20 @@ import sys
 import os
 import global_var
 from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QMainWindow,  QTreeWidgetItem, QFileSystemModel, QMessageBox, QMenu, QAction
+from PyQt5.QtWidgets import QApplication, QMainWindow,  QTreeWidgetItem, QFileSystemModel, QMessageBox, QMenu, QAction,QWidget,QSizePolicy, QFrame
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QIcon, QClipboard
 from PyQt5.QtCore import Qt, QDir, QSize,QFileInfo, QDateTime, QPropertyAnimation, QEasingCurve
 import resource_1
+
+from acc_popup import ProfilePopup
 
 from scanswindow import GifPlayer
 from encrypt import encrypt_file, decrypt_file, encrypt_folder, decrypt_folder
 from operations import cut_funtion, delete_funtion, rename_funtion, paste_funtion, copy_funtion, details_funtion, set_details, new_file_funtion, open_file_browser
 
 import qdarkstyle
+from qt_material import apply_stylesheet
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,9 +23,28 @@ class MainWindow(QMainWindow):
         uic.loadUi("ui_files\\main_window.ui", self)
         self.setWindowIcon(QIcon("resources\\logo.png"))
         self.setWindowTitle("FortiFile")
+        self.theme = "dark"
         self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
         self.fade_in_animation()
         self.toolBar.setIconSize(QSize(36, 36))
+        self.toolBar.setStyleSheet("""
+                                    QToolBar {
+                                        background: transparent;
+                                        border: none;
+                                        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                                    }
+                                    QToolButton {
+                                        background: transparent;
+                                        border: none;
+                                        margin: 4px;
+                                        padding: 4px;
+                                    }
+                                    QToolButton:hover {
+                                        background-color: rgba(255, 255, 255, 0.1);  /* Soft hover effect */
+                                        border-radius: 6px;
+                                    }
+                                """)
+
         self.details_widget.setVisible(False)
 
         
@@ -63,6 +85,12 @@ class MainWindow(QMainWindow):
         self.actionLock_File.triggered.connect(self.lock_f)
         self.actionUnlockFile.triggered.connect(self.unlock_f)
         self.actionAdd_File.triggered.connect(self.add_new_file)
+        self.actionUser.triggered.connect(self.show_profile_popup)
+
+        spacer = QWidget()
+        spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self.toolBar.addWidget(spacer)
+        self.toolBar.addAction(self.actionUser)
         self.details_on = False
         self.scan_window = None
 
@@ -207,6 +235,7 @@ class MainWindow(QMainWindow):
         print(global_var.current_key)
         encrypt_file(self.current_selected_file_path, global_var.current_key)
 
+
     def unlock_f(self):
         if not self.current_selected_file_path:
             QMessageBox.warning(self, "Error", "Please select a file to Lock.")
@@ -226,6 +255,21 @@ class MainWindow(QMainWindow):
         self.scan_window.show()
         self.setDisabled(True)
 
+    def show_profile_popup(self):
+        action_button = self.toolBar.widgetForAction(self.actionUser)
+        if action_button:
+            popup = ProfilePopup(self)
+            popup.setStyleSheet('''border-radius: 20px;''')
+            button_pos = action_button.mapToGlobal(action_button.rect().bottomRight())
+            popup.move(button_pos.x() - popup.width(), button_pos.y())
+            if self.theme == "dark":
+                popup.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+            else:
+                popup.setStyleSheet("")
+            popup.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+            popup.label_2.setText("Hi, "+global_var.current_user+"!")
+            popup.show()
+
     def closeEvent(self, event):
         if self.scan_window and self.scan_window.isVisible():  # If scanning is active
             reply = QMessageBox.question(self, "Warning", 
@@ -243,6 +287,7 @@ if __name__ == "__main__":
 
     # Apply dark theme
     #app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+    #apply_stylesheet(app, theme='dark_teal.xml')
 
     window = MainWindow()
     window.show()

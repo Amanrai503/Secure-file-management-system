@@ -102,13 +102,14 @@ class LoginWindow(QMainWindow):
             cursor = connection.cursor()
 
             # Query to check if email exists
-            cursor.execute("SELECT U_id, Email, password2, totp_secret, encryption_key FROM users WHERE Email = %s", (email,))
+            cursor.execute("SELECT U_id, Name, Email, password2, totp_secret, encryption_key FROM users WHERE Email = %s", (email,))
             result = cursor.fetchone()  
 
             if result:
-                U_id ,db_email, db_password, db_totp_secret, encryption_key = result
+                U_id , name, db_email, db_password, db_totp_secret, encryption_key = result
                 global_var.current_User_ID = U_id
                 global_var.current_key = encryption_key
+                global_var.current_user = name
                 access = verify(db_totp_secret, totp)
 
                 if password == db_password and access:  

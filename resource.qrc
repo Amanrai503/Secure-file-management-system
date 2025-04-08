@@ -1,8 +1,15 @@
 <RCC>
   <qresource prefix="images">
+    <file>resources/icons8-account-96.png</file>
     <file>resources/ss.jpg</file>
   </qresource>
   <qresource prefix="icons">
+    <file>resources/icons8-change-48.png</file>
+    <file>resources/icons8-dark-mode-32.png</file>
+    <file>resources/icons8-light-mode-32.png</file>
+    <file>resources/icons8-notification-32.png</file>
+    <file>resources/icons8-sign-out-50.png</file>
+    <file>resources/user.png</file>
     <file>resources/icons8-add-96.png</file>
     <file>resources/icons8-close-52.png</file>
     <file>resources/icons8-tick-52.png</file>

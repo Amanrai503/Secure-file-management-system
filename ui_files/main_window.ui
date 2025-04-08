@@ -700,6 +700,18 @@ border:none;
     <string>Add File</string>
    </property>
   </action>
+  <action name="actionUser">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icons/resources/user.png</normaloff>:/icons/resources/user.png</iconset>
+   </property>
+   <property name="text">
+    <string>User</string>
+   </property>
+   <property name="toolTip">
+    <string>User info</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="../resource.qrc"/>
