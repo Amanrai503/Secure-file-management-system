@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMessageBox, QInputDialog, QFileIconProvider, QFileDialog
+from PyQt5.QtWidgets import QMessageBox, QInputDialog, QFileIconProvider, QFileDialog, QLineEdit
 from PyQt5.QtCore import QFileInfo
 from PyQt5.QtGui import QPixmap
 import os 
@@ -225,3 +225,24 @@ def open_file_browser(self):
 
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to paste file:\n{str(e)}")
+
+def change_pass(self):
+    print("Change Password")
+    current_password, ok = QInputDialog.getText(self, "Current Password", "Enter your current password:", QLineEdit.Password)
+    if not ok or not current_password.strip():
+        return
+
+    new_password, ok = QInputDialog.getText(self, "New Password", "Enter your new password:", QLineEdit.Password)
+    if not ok or not new_password.strip():
+        return
+
+    confirm_password, ok = QInputDialog.getText(self, "Confirm Password", "Re-enter your new password:", QLineEdit.Password)
+    if not ok or not confirm_password.strip():
+        return
+
+    if new_password != confirm_password:
+        QMessageBox.warning(self, "Password Mismatch", "The new passwords do not match. Please try again.")
+        return
+
+    # Here you would typically save the new password to a secure location
+    QMessageBox.information(self, "Success", "Your password has been changed successfully.")

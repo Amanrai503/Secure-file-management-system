@@ -13,6 +13,7 @@ class ProfilePopup(QFrame):
         self.setWindowFlags(Qt.Popup)  # makes it behave like a popup
         uic.loadUi("ui_files\\acc_popup.ui", self)
         self.toggle_btn.clicked.connect(self.toggle_theme)
+        self.logout_btn.clicked.connect(self.logout)
 
 
     def toggle_theme(self):
@@ -29,17 +30,20 @@ class ProfilePopup(QFrame):
             self.parent.setStyleSheet("")
             self.toggle_btn.setText("Dark Mode")
             self.setStyleSheet('''QPushButton {
-    background-color: transparent;
-    border: 1px;
-	height:50px;
-}
+                                background-color: transparent;
+                                border: 1px;
+                                height:50px;
+                            }
 
-QPushButton:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
-}
+                            QPushButton:hover {
+                                background-color: rgba(255, 255, 255, 0.1);
+                                border-radius: 5px;
+                            }
 
-QPushButton:pressed {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-''')
+                            QPushButton:pressed {
+                                background-color: rgba(255, 255, 255, 0.2);
+                            }
+                            ''')
+    
+    def logout(self):
+        self.parent.logout()

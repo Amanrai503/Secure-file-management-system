@@ -282,6 +282,13 @@ class MainWindow(QMainWindow):
         else:
             event.accept()
 
+    def logout(self):
+        reply = QMessageBox.question(self, "Logout", 
+                                     "Are you sure you want to logout?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            self.close()
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
