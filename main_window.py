@@ -233,22 +233,22 @@ class MainWindow(QMainWindow):
     def lock_f(self):
         print(global_var.current_User_ID)
         print(global_var.current_key)
-        encrypt_file(self.current_selected_file_path, global_var.current_key)
+        encrypt_file(self.current_selected_file_path, global_var.current_key, str(global_var.current_User_ID))
 
 
     def unlock_f(self):
         if not self.current_selected_file_path:
             QMessageBox.warning(self, "Error", "Please select a file to Lock.")
             return
-        decrypt_file(self.current_selected_file_path, global_var.current_key)
+        decrypt_file(self.current_selected_file_path, global_var.current_key, str(global_var.current_User_ID), self)
         print("Unlock")
         pass
 
     def unlock_all(self):
-        decrypt_folder(self.current_directory, global_var.current_key,self)
+        decrypt_folder(self.current_directory, global_var.current_key, str(global_var.current_User_ID), self)
     
     def lock_all(self):
-        encrypt_folder(self.current_directory, global_var.current_key,self)
+        encrypt_folder(self.current_directory, global_var.current_key,str(global_var.current_User_ID), self)
 
     def scan_file(self):
         self.scan_window = GifPlayer(self)
