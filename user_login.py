@@ -95,7 +95,7 @@ class LoginWindow(QMainWindow):
             connection = pymysql.connect(
                 host="localhost",
                 user="root",  
-                password="1234",  
+                password="Jaishreeram@1000",  
                 database="login_info"
             )
 

@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
         self.treeWidget.setIconSize(QSize(28, 28))
 
         #variables holding the path of the file and current selectted file
-        self.start_directory = "D:/python/Secure File Management System/Drive"
+        self.start_directory = "C:\\Users\\ayush\\Git-repository\\FortiFile\\Secure-file-management-system\\Drive"
         self.current_directory = self.start_directory
         self.current_selected_file_path = ""
 
@@ -156,8 +156,8 @@ class MainWindow(QMainWindow):
         self.actionUnlockFile.setEnabled(False)
 
     def populate_tree(self, root_folder):
-        root_folder_path_list = [r"D:\python\Secure File Management System\Documents",r"D:\python\Secure File Management System\Downloads",r"D:\python\Secure File Management System\Music",r"D:\python\Secure File Management System\Pictures"]
-        root_folder_icon_list = [r"D:\python\Secure File Management System\resources\doc.png",r"D:\python\Secure File Management System\resources\download.png",r"D:\python\Secure File Management System\resources\music.png",r"D:\python\Secure File Management System\resources\picture.png"]
+        root_folder_path_list = [r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\Documents",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\Downloads",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\Music",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\Pictures"]
+        root_folder_icon_list = [r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\resources\doc.png",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\resources\download.png",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\resources\music.png",r"C:\Users\ayush\Git-repository\FortiFile\Secure-file-management-system\resources\picture.png"]
         for folder,icon in zip(root_folder_path_list,root_folder_icon_list):
             item = QTreeWidgetItem([os.path.basename(folder)])
             item_icon =QIcon(icon)

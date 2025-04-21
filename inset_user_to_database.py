@@ -8,7 +8,7 @@ def insert_user_info(name: str, email: str, password: str, topt: str, enc_key: s
         connection = pymysql.connect(
             host="localhost",
             user="root",  
-            password="1234",  
+            password="Jaishreeram@1000",  
             database="login_info"
         )
         
